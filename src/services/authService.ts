@@ -1,26 +1,30 @@
 import axios from '../api/axiosConfig';
-import { UserCredentials, RegisterData } from '../interfaces/users';
+import { AuthData, LoginResponse } from '../interfaces/auth';
 
-export const loginUser = async (credentials: UserCredentials) => {
-  const response = await axios.post('/users/login', credentials, {
+
+export const loginUser = async (credentials: AuthData): Promise<LoginResponse['data']> => {
+  const params = new URLSearchParams();
+  params.append('username', credentials.username);
+  params.append('password', credentials.password);
+  params.append('grant_type', 'password');
+  
+  const response = await axios.post<LoginResponse>('/users/login', params, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  return response.data;
+  return response.data.data; // Accedemos a la data dentro de la estructura de respuesta estándar
 };
 
-export const registerUser = async (data: RegisterData) => {
+export const registerUser = async (data: AuthData) => {
   const response = await axios.post('/users/register', data);
-  return response.data;
+  console.log(response)
+  return response.data.data;
 };
 
 export const refreshToken = async () => {
   const response = await axios.post('/users/refresh');
-  return response.data;
+  console.log(response)
+  return response.data.data;
 };
 
-export const logoutUser = async () => {
-  const response = await axios.post('/users/logout');
-  return response.data;
-};

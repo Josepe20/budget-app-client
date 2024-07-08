@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { registerUser } from '../../src/services/authService';
+import { useAuth } from '../../src/hooks/useAuth';
+
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { handleRegister, error } = useAuth();
 
-  const handleRegister = async () => {
-    try {
-      const response = await registerUser({ username, email, password });
-      alert('Registration successful');
-    } catch (error) {
-      alert('Registration failed');
-    }
+  const onRegister = () => {
+    handleRegister({ username, email, password });
   };
 
   return (
@@ -38,7 +35,7 @@ export default function Register() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Register" onPress={handleRegister} />
+      <Button title="Register" onPress={onRegister} />
     </View>
   );
 }

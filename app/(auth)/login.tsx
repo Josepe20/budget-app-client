@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { loginUser } from '../../src/services/authService';
+
+import { useAuth } from '../../src/hooks/useAuth';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { handleLogin, error } = useAuth();
 
-  const handleLogin = async () => {
-    try {
-      const response = await loginUser({ username, password });
-      console.log(response);
-      localStorage.setItem('token', response.token); 
-      alert('Login successful');
-    } catch (error) {
-      alert('Login failed');
-    }
+  const onLogin = () => {
+    handleLogin({ username, password });
   };
 
   return (
     <View style={styles.container}>
       <Text>Login</Text>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -33,7 +29,7 @@ export default function Login() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={onLogin} />
     </View>
   );
 }
@@ -51,4 +47,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 10,
   },
+  error: {
+    color: 'red',
+    marginBottom: 12,
+  },
 });
+

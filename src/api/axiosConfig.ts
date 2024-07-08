@@ -11,7 +11,7 @@ const instance = axios.create({
 });
 
 
-instance.interceptors.request.use(
+/* instance.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -45,7 +45,7 @@ instance.interceptors.response.use(
     }
     return Promise.reject(error);
   }
-);
+); */
 
 export default instance;
 
