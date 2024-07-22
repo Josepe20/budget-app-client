@@ -15,7 +15,9 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
+
       {error ? <Text style={styles.error}>{error}</Text> : null}
+      
       <TextInput
         style={styles.input}
         placeholder="Username"

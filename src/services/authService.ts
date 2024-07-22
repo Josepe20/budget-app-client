@@ -1,5 +1,5 @@
 import axios from '../api/axiosConfig';
-import { AuthData, LoginResponse } from '../interfaces/auth';
+import { AuthData, LoginResponse, refreshTokenInterface } from '../interfaces/auth';
 
 
 export const loginUser = async (credentials: AuthData): Promise<LoginResponse['data']> => {
@@ -22,8 +22,8 @@ export const registerUser = async (data: AuthData) => {
   return response.data.data;
 };
 
-export const refreshToken = async () => {
-  const response = await axios.post('/users/refresh');
+export const refreshToken = async (refreshToken: refreshTokenInterface) => {
+  const response = await axios.post('/users/refresh',  refreshToken);
   console.log(response)
   return response.data.data;
 };

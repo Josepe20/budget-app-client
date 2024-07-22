@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { useDispatch } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 
 import { setAuthTokens, clearAuthTokens } from '../store/slices/authSlice';
-import { loginUser, registerUser } from '../services/authService';
+import { loginUser, registerUser, refreshToken } from '../services/authService';
 import { AuthData, JwtPayload } from '../interfaces/auth';
+import { useAppDispatch, useAppSelector } from "../hooks/store";
 
 
 export const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const authData = useAppSelector((state) => state.auth);
   const router = useRouter();
 
   const decodeToken = (token: string): JwtPayload => {
@@ -20,11 +21,25 @@ export const useAuth = () => {
 
   const handleLogin = async (data: AuthData) => {
     try {
-      const response = await loginUser({ username: data.username, password: data.password });
-      console.log(response)
-      dispatch(setAuthTokens({ accessToken: response.access_token, refreshToken: response.refresh_token }));
+      const bodyPayload = { 
+        username: data.username, 
+        password: data.password 
+      }
+      const response = await loginUser(bodyPayload);
+      console.log("login response: ", response)
+
       const decodedToken = decodeToken(response.access_token);
-      console.log('User Name:', decodedToken.sub);  
+      const tokenExpiration = new Date(decodedToken.exp * 1000);
+
+      console.log('sub_content: ', decodedToken.sub);  
+      console.log('expire time: ', tokenExpiration); 
+
+      dispatch(setAuthTokens({ 
+        accessToken: response.access_token, 
+        refreshToken: response.refresh_token,
+        tokenExpiration: tokenExpiration.getTime()
+      }));
+
       router.push('/(app)');  
     } catch (err) {
       setError('Login failed');
@@ -34,9 +49,17 @@ export const useAuth = () => {
 
   const handleRegister = async (data: AuthData) => {
     try {
-      const response = await registerUser({ username: data.username, email: data.email!, password: data.password });
+      const bodyPayload = { 
+        username: data.username, 
+        email: data.email!, 
+        password: data.password 
+      }
+      const response = await registerUser(bodyPayload);
+      console.log("register response: ", response);
+
       if (response.status === 200) {
         alert(response.message);
+        router.push('/(auth)/login')
       } else {
         setError(response.message);
       }
@@ -53,6 +76,45 @@ export const useAuth = () => {
     router.push('/');
     
   };
+
+  const refreshTokenOnExpire = async () => {
+    try {
+      const bodyPayload = { 
+        refreshToken: authData.refreshToken! 
+      };
+
+      console.log("bodyPayload refreshToken", bodyPayload)
+      const response = await refreshToken(bodyPayload);
+      console.log("refresh response: ",response)
+      const decodedToken = decodeToken(response.access_token);
+      const tokenExpiration = new Date(decodedToken.exp * 1000);
+
+      dispatch(setAuthTokens({
+        accessToken: response.access_token,
+        refreshToken: authData.refreshToken!,  
+        tokenExpiration: tokenExpiration.getTime()
+      }));
+
+      console.log('Token refreshed successfully');     
+    } catch(err) {
+      setError('Token refresh failed');
+      console.error(err);
+      handleLogout(); 
+    }
+  };
+
+  useEffect(() => {
+    if (authData.tokenExpiration) {
+      const timeUntilExpiration = authData.tokenExpiration - Date.now() - 60000;  // Refrescar 1 minuto antes de expirar
+
+      if (timeUntilExpiration > 0) {
+        const timeoutId = setTimeout(refreshTokenOnExpire, timeUntilExpiration);
+        return () => clearTimeout(timeoutId);  // Limpiar el timeout si el componente se desmonta
+      } else {
+        refreshTokenOnExpire();  // Si ya expiró, refrescar inmediatamente
+      }
+    }
+  }, [authData.tokenExpiration]);
 
   return { handleLogin, handleRegister, handleLogout, error };
 };

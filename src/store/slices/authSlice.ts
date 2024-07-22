@@ -5,6 +5,7 @@ import { AuthState } from '../../interfaces/auth';
 const authInitialState: AuthState = {
     accessToken: null,
     refreshToken: null,
+    tokenExpiration: null,
     isAuthenticated: false,
 };
 
@@ -12,14 +13,16 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
   reducers: {
-    setAuthTokens(state, action: PayloadAction<{ accessToken: string; refreshToken: string }>) {
+    setAuthTokens(state, action: PayloadAction<{ accessToken: string; refreshToken: string;  tokenExpiration: number}>) {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      state.tokenExpiration = action.payload.tokenExpiration;
       state.isAuthenticated = true;
     },
     clearAuthTokens(state) {
       state.accessToken = null;
       state.refreshToken = null;
+      state.tokenExpiration = null;
       state.isAuthenticated = false;
     },
   },
