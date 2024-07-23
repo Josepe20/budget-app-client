@@ -1,7 +1,11 @@
+import { UserWithId } from "./users";
+
+
 export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   tokenExpiration: number | null;
+  user: UserWithId | null;
   isAuthenticated: boolean;
 }
 

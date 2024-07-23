@@ -6,6 +6,7 @@ import { setAuthTokens, clearAuthTokens } from '../store/slices/authSlice';
 import { loginUser, registerUser, refreshToken } from '../services/authService';
 import { AuthData, JwtPayload } from '../interfaces/auth';
 import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { UserWithId } from '../interfaces/users';
 
 
 export const useAuth = () => {
@@ -30,17 +31,23 @@ export const useAuth = () => {
 
       const decodedToken = decodeToken(response.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
+      const [userId, userName] = decodedToken.sub.split("-");
+      const userWithId: UserWithId = {
+        id: Number(userId),
+        username: userName,
+      } 
 
-      console.log('sub_content: ', decodedToken.sub);  
+      console.log('userwithId: ', userWithId);  
       console.log('expire time: ', tokenExpiration); 
 
       dispatch(setAuthTokens({ 
         accessToken: response.access_token, 
         refreshToken: response.refresh_token,
-        tokenExpiration: tokenExpiration.getTime()
+        tokenExpiration: tokenExpiration.getTime(),
+        user: userWithId,
       }));
 
-      router.push('/(app)');  
+      router.push('/(budgetapp)');  
     } catch (err) {
       setError('Login failed');
       console.error(err);
@@ -92,7 +99,8 @@ export const useAuth = () => {
       dispatch(setAuthTokens({
         accessToken: response.access_token,
         refreshToken: authData.refreshToken!,  
-        tokenExpiration: tokenExpiration.getTime()
+        tokenExpiration: tokenExpiration.getTime(),
+        user: authData.user!
       }));
 
       console.log('Token refreshed successfully');     

@@ -16,6 +16,8 @@ export default function Register() {
   return (
     <View style={styles.container}>
       <Text>Register</Text>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -52,5 +54,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     padding: 10,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 12,
   },
 });
