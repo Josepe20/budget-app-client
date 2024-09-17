@@ -1,5 +1,5 @@
 import { configureStore, type Middleware } from "@reduxjs/toolkit";
-import authReducer from './slices/authSlice';
+import authReducer from '../modules/AUTH/users/user.store';
 
 
 const persistanceLocalStorageMiddleware: Middleware = (store) => (next) => (action) => {
