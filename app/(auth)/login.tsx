@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-import { useAuth } from '../../src/hooks/useAuth';
+import { useAuth } from '../../src/modules/AUTH/users/user.hook';
 
 export default function Login() {
   const [username, setUsername] = useState('');
