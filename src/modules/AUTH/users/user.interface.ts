@@ -1,14 +1,14 @@
 
-
+/****** USER INTERFACES ******/
 export type UserId = number
 
-export interface User {
+export interface User { 
+    user_id: number; 
     username: string;
-    email?: string;
-}
-
-export interface UserWithId extends User {
-    id: number;
+    email: string;
+    is_active: boolean;
+    is_verified: boolean;
+    created_at: string;  
 }
 
 
@@ -16,7 +16,7 @@ export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   tokenExpiration: number | null;
-  user: UserWithId | null;
+  user: User | null;
   isAuthenticated: boolean;
 }
 
@@ -27,22 +27,22 @@ export interface AuthData {
 }
 
 export interface refreshTokenInterface {
-    refreshToken: string
+    refreshToken: string;
+}
+
+export interface refreshTokenResponse {
+    access_token: string;
+    token_type: string
 }
 
 export interface JwtPayload {
-    sub: string;  // username
+    sub: string;  // id-username
     exp: number;  // Expiración del token
 }
 
-
 export interface LoginResponse {
-    status: number;
-    message: string;
-    data: {
-        access_token: string;
-        refresh_token: string;
-        token_type: string;
-    };
-  }
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
+}
 

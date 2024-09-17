@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { useAuth } from '../../src/modules/AUTH/users/user.hook';
+import { useAuth } from '@/modules/AUTH/users/user.hook';
 import { useRouter } from 'expo-router';
-import { useAppSelector } from '../../src/hooks/store';
+import { useAppSelector } from '@/common/hooks/store';
 
 
 export default function Dashboard() {

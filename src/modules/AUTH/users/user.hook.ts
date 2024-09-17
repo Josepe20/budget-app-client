@@ -4,8 +4,8 @@ import { jwtDecode } from 'jwt-decode';
 
 import { setAuthTokens, clearAuthTokens } from './user.store';
 import { loginUser, registerUser, refreshToken } from './user.service';
-import { AuthData, JwtPayload, UserWithId } from './user.interface';
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
+import { AuthData, JwtPayload, User } from './user.interface';
+import { useAppDispatch, useAppSelector } from "@/common/hooks/store";
 
 
 export const useAuth = () => {
@@ -28,10 +28,10 @@ export const useAuth = () => {
       const response = await loginUser(bodyPayload);
       console.log("login response: ", response)
 
-      const decodedToken = decodeToken(response.access_token);
+      const decodedToken = decodeToken(response.data.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
       const [userId, userName] = decodedToken.sub.split("-");
-      const userWithId: UserWithId = {
+      const userWithId: User = {
         id: Number(userId),
         username: userName,
       } 

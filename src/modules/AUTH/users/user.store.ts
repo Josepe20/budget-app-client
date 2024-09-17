@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserWithId, AuthState } from "./user.interface";
+import { User, AuthState } from "./user.interface";
 
 
 const authInitialState: AuthState = {
@@ -14,7 +14,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
   reducers: {
-    setAuthTokens(state, action: PayloadAction<{ accessToken: string; refreshToken: string;  tokenExpiration: number, user: UserWithId}>) {
+    setAuthTokens(state, action: PayloadAction<{ accessToken: string; refreshToken: string;  tokenExpiration: number, user: User}>) {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.tokenExpiration = action.payload.tokenExpiration;
