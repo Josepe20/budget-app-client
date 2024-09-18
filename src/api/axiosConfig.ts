@@ -1,7 +1,7 @@
 import axios from 'axios';
 import enviroment from './enviroment';
 
-const envURL = enviroment === 'DEV' ? 'http://127.0.0.1:8000/' : 'I have no Prod enviroment yet XD'
+const envURL = enviroment === 'DEV' ? 'http://127.0.0.1:8000/api/' : 'I have no Prod enviroment yet XD'
 
 const baseURL = envURL;
 

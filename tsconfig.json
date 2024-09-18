@@ -10,12 +10,18 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": "./",                  
+    "paths": {                         
+      "@/*": ["src/*"],
+      "@app/*": ["app/*"]
+    }
   },
   "include": [
     "src/**/*.tsx",
-    "App.tsx",
-    "components/**/*.tsx"
+    "src/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.ts",
   ],
   "exclude": [
     "node_modules"

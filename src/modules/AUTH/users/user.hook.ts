@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { jwtDecode } from 'jwt-decode';
 
-import { setAuthTokens, clearAuthTokens } from '../store/slices/authSlice';
-import { loginUser, registerUser, refreshToken } from '../services/authService';
-import { AuthData, JwtPayload } from '../interfaces/auth';
-import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { UserWithId } from '../interfaces/users';
+import { setAuthTokens, clearAuthTokens } from './user.store';
+import { loginUser, registerUser, refreshToken } from './user.service';
+import { AuthData, JwtPayload, User } from './user.interface';
+import { useAppDispatch, useAppSelector } from "@/common/hooks/store";
 
 
 export const useAuth = () => {
@@ -29,22 +28,18 @@ export const useAuth = () => {
       const response = await loginUser(bodyPayload);
       console.log("login response: ", response)
 
-      const decodedToken = decodeToken(response.access_token);
+      const decodedToken = decodeToken(response.data.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
       const [userId, userName] = decodedToken.sub.split("-");
-      const userWithId: UserWithId = {
-        id: Number(userId),
-        username: userName,
-      } 
 
-      console.log('userwithId: ', userWithId);  
+      console.log('userwithId: ', userId);  
       console.log('expire time: ', tokenExpiration); 
 
       dispatch(setAuthTokens({ 
-        accessToken: response.access_token, 
-        refreshToken: response.refresh_token,
+        accessToken: response.data.access_token, 
+        refreshToken: response.data.refresh_token,
         tokenExpiration: tokenExpiration.getTime(),
-        user: userWithId,
+        userId: Number(userId),
       }));
 
       router.push('/(budgetapp)');  
@@ -93,14 +88,14 @@ export const useAuth = () => {
       console.log("bodyPayload refreshToken", bodyPayload)
       const response = await refreshToken(bodyPayload);
       console.log("refresh response: ",response)
-      const decodedToken = decodeToken(response.access_token);
+      const decodedToken = decodeToken(response.data.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
 
       dispatch(setAuthTokens({
-        accessToken: response.access_token,
+        accessToken: response.data.access_token,
         refreshToken: authData.refreshToken!,  
         tokenExpiration: tokenExpiration.getTime(),
-        user: authData.user!
+        userId: authData.userId!,
       }));
 
       console.log('Token refreshed successfully');     
