@@ -2,13 +2,14 @@
 /****** USER INTERFACES ******/
 export type UserId = number
 
+
 export interface User { 
-    user_id: number; 
+    userId: number; 
     username: string;
     email: string;
-    is_active: boolean;
-    is_verified: boolean;
-    created_at: string;  
+    isActive: boolean;
+    isVerified: boolean;
+    createdAt: string;  
 }
 
 
@@ -16,6 +17,7 @@ export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   tokenExpiration: number | null;
+  userId: UserId | null;
   user: User | null;
   isAuthenticated: boolean;
 }

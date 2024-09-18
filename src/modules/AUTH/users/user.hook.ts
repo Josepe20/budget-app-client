@@ -31,19 +31,15 @@ export const useAuth = () => {
       const decodedToken = decodeToken(response.data.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
       const [userId, userName] = decodedToken.sub.split("-");
-      const userWithId: User = {
-        id: Number(userId),
-        username: userName,
-      } 
 
-      console.log('userwithId: ', userWithId);  
+      console.log('userwithId: ', userId);  
       console.log('expire time: ', tokenExpiration); 
 
       dispatch(setAuthTokens({ 
-        accessToken: response.access_token, 
-        refreshToken: response.refresh_token,
+        accessToken: response.data.access_token, 
+        refreshToken: response.data.refresh_token,
         tokenExpiration: tokenExpiration.getTime(),
-        user: userWithId,
+        userId: Number(userId),
       }));
 
       router.push('/(budgetapp)');  
@@ -92,14 +88,14 @@ export const useAuth = () => {
       console.log("bodyPayload refreshToken", bodyPayload)
       const response = await refreshToken(bodyPayload);
       console.log("refresh response: ",response)
-      const decodedToken = decodeToken(response.access_token);
+      const decodedToken = decodeToken(response.data.access_token);
       const tokenExpiration = new Date(decodedToken.exp * 1000);
 
       dispatch(setAuthTokens({
-        accessToken: response.access_token,
+        accessToken: response.data.access_token,
         refreshToken: authData.refreshToken!,  
         tokenExpiration: tokenExpiration.getTime(),
-        user: authData.user!
+        userId: authData.userId!,
       }));
 
       console.log('Token refreshed successfully');     
