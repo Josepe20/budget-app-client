@@ -9,7 +9,7 @@ export const loginUser = async (credentials: AuthData): Promise<StandardResponse
   params.append('password', credentials.password);
   params.append('grant_type', 'password');
   
-  const response = await axios.post('users/login', params, {
+  const response = await axios.post<StandardResponse<LoginResponse>>('/users/login', params, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -18,14 +18,14 @@ export const loginUser = async (credentials: AuthData): Promise<StandardResponse
 };
 
 export const registerUser = async (data: AuthData): Promise<StandardResponse<User>> => {
-  const response = await axios.post('users/register', data);
+  const response = await axios.post<StandardResponse<User>>('/users/register', data);
   console.log(response)
-  return response.data.data;
+  return response.data;
 };
 
 export const refreshToken = async (refreshToken: refreshTokenInterface): Promise<StandardResponse<refreshTokenResponse>> => {
-  const response = await axios.post('users/refresh',  refreshToken);
+  const response = await axios.post<StandardResponse<refreshTokenResponse>>('/users/refresh',  refreshToken);
   console.log(response)
-  return response.data.data;
+  return response.data;
 };
 

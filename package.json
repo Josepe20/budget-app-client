@@ -10,7 +10,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-    "storybook": "SHOW_STORYBOOK=true expo start"
+    "storybook": "SHOW_STORYBOOK=true npx expo start"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",
