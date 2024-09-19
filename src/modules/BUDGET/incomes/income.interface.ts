@@ -20,5 +20,5 @@ export interface Income extends IncomeBase {
 }
 
 // Standard response types
-export type IncomeListResponse = StandardResponse<Income[]>;
+export type ListIncomeResponse = StandardResponse<Income[]>;
 export type SingleIncomeResponse = StandardResponse<Income>;

@@ -1,15 +1,15 @@
 import axios from '@/api/axiosConfig';
-import { IncomeCreate, IncomeListResponse, SingleIncomeResponse } from './income.interface';
+import { IncomeCreate, ListIncomeResponse, SingleIncomeResponse } from './income.interface';
 
 
-export const getUserIncomes = async (userId: number): Promise<IncomeListResponse> => {
-  const response = await axios.get<IncomeListResponse>(`/incomes/user/${userId}`);
+export const getUserIncomes = async (userId: number): Promise<ListIncomeResponse> => {
+  const response = await axios.get<ListIncomeResponse>(`/incomes/user/${userId}`);
   return response.data;
 };
 
 
-export const getUserActiveIncomes = async (userId: number): Promise<IncomeListResponse> => {
-  const response = await axios.get<IncomeListResponse>(`/incomes/user/${userId}/active`);
+export const getUserActiveIncomes = async (userId: number): Promise<ListIncomeResponse> => {
+  const response = await axios.get<ListIncomeResponse>(`/incomes/user/${userId}/active`);
   return response.data;
 };
 

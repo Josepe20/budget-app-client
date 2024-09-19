@@ -21,5 +21,5 @@ export interface Expense extends ExpenseBase {
 }
 
 // Standard response types
-export type ExpenseListResponse = StandardResponse<Expense[]>;
+export type ListExpenseResponse = StandardResponse<Expense[]>;
 export type SingleExpenseResponse = StandardResponse<Expense>;

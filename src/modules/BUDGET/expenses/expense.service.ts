@@ -1,27 +1,27 @@
 import axios from '@/api/axiosConfig';
-import { ExpenseCreate, ExpenseListResponse, SingleExpenseResponse } from './expense.interface';
+import { ExpenseCreate, ListExpenseResponse, SingleExpenseResponse } from './expense.interface';
 
 
-export const getUserExpenses = async (userId: number): Promise<ExpenseListResponse> => {
-  const response = await axios.get<ExpenseListResponse>(`/expenses/user/${userId}`);
+export const getUserExpenses = async (userId: number): Promise<ListExpenseResponse> => {
+  const response = await axios.get<ListExpenseResponse>(`/expenses/user/${userId}`);
   return response.data;
 };
 
 
-export const getUserActiveExpenses = async (userId: number): Promise<ExpenseListResponse> => {
-  const response = await axios.get<ExpenseListResponse>(`/expenses/user/${userId}/active`);
+export const getUserActiveExpenses = async (userId: number): Promise<ListExpenseResponse> => {
+  const response = await axios.get<ListExpenseResponse>(`/expenses/user/${userId}/active`);
   return response.data;
 };
 
 
-export const getUserExpensesByCategory = async (userId: number, categoryId: number): Promise<ExpenseListResponse> => {
-  const response = await axios.get<ExpenseListResponse>(`/expenses/user/${userId}/category/${categoryId}`);
+export const getUserExpensesByCategory = async (userId: number, categoryId: number): Promise<ListExpenseResponse> => {
+  const response = await axios.get<ListExpenseResponse>(`/expenses/user/${userId}/category/${categoryId}`);
   return response.data;
 };
 
 
-export const getUserActiveExpensesByCategory = async (userId: number, categoryId: number): Promise<ExpenseListResponse> => {
-  const response = await axios.get<ExpenseListResponse>(`/expenses/user/${userId}/category/${categoryId}/active`);
+export const getUserActiveExpensesByCategory = async (userId: number, categoryId: number): Promise<ListExpenseResponse> => {
+  const response = await axios.get<ListExpenseResponse>(`/expenses/user/${userId}/category/${categoryId}/active`);
   return response.data;
 };
 
