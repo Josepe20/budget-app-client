@@ -32,7 +32,7 @@ export const useAuth = () => {
       const tokenExpiration = new Date(decodedToken.exp * 1000);
       const [userId, userName] = decodedToken.sub.split("-");
 
-      console.log('userwithId: ', userId);  
+      console.log('user: ', `${userId}-${userName}`);  
       console.log('expire time: ', tokenExpiration); 
 
       dispatch(setAuthTokens({ 
