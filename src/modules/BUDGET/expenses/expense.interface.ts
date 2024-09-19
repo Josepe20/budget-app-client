@@ -13,7 +13,7 @@ export interface ExpenseCreate extends ExpenseBase {
 }
 
 // Interface for Expense Response
-export interface ExpenseResponse extends ExpenseBase {
+export interface Expense extends ExpenseBase {
   expense_id: number;
   expense_name: string;
   amount: number;
@@ -21,5 +21,5 @@ export interface ExpenseResponse extends ExpenseBase {
 }
 
 // Standard response types
-export type ExpenseListResponse = StandardResponse<ExpenseResponse[]>;
-export type SingleExpenseResponse = StandardResponse<ExpenseResponse>;
+export type ExpenseListResponse = StandardResponse<Expense[]>;
+export type SingleExpenseResponse = StandardResponse<Expense>;

@@ -10,13 +10,13 @@ export interface CategoryExpenseBase {
 export interface CategoryExpenseCreate extends CategoryExpenseBase {}
 
 // Response interface for a single category expense
-export interface CategoryExpenseResponse extends CategoryExpenseBase {
+export interface CategoryExpense extends CategoryExpenseBase {
     category_expense_id: number;
     created_at: string; // or Date if your API returns a valid date string
 }
 
 // Standard Response for a list of Category Expenses
-export type ListCategoryExpenseResponse = StandardResponse<CategoryExpenseResponse[]>;
+export type ListCategoryExpenseResponse = StandardResponse<CategoryExpense[]>;
 
 // Standard Response for a single Category Expense
-export type SingleCategoryExpenseResponse = StandardResponse<CategoryExpenseResponse>;
+export type SingleCategoryExpenseResponse = StandardResponse<CategoryExpense>;

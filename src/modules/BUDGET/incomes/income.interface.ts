@@ -12,7 +12,7 @@ export interface IncomeCreate extends IncomeBase {
 }
 
 // Interface for Income Response
-export interface IncomeResponse extends IncomeBase {
+export interface Income extends IncomeBase {
   income_id: number;
   income_name: string;
   amount: number;
@@ -20,5 +20,5 @@ export interface IncomeResponse extends IncomeBase {
 }
 
 // Standard response types
-export type IncomeListResponse = StandardResponse<IncomeResponse[]>;
-export type SingleIncomeResponse = StandardResponse<IncomeResponse>;
+export type IncomeListResponse = StandardResponse<Income[]>;
+export type SingleIncomeResponse = StandardResponse<Income>;

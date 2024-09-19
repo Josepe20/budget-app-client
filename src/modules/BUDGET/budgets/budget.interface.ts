@@ -12,7 +12,7 @@ export interface BudgetCreate extends BudgetBase {
 }
 
 // Interface for Budget Response
-export interface BudgetResponse extends BudgetBase {
+export interface Budget extends BudgetBase {
   budget_id: number;
   total_income: number;
   total_expense: number;
@@ -20,5 +20,5 @@ export interface BudgetResponse extends BudgetBase {
 }
 
 // Standard response interfaces
-export type ListBudgetResponse = StandardResponse<BudgetResponse[]>;
-export type SingleBudgetResponse = StandardResponse<BudgetResponse>;
+export type ListBudgetResponse = StandardResponse<Budget[]>;
+export type SingleBudgetResponse = StandardResponse<Budget>;

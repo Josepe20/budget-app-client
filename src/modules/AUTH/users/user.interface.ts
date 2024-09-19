@@ -5,17 +5,18 @@ export type UserId = number
 // Base interface for User
 export interface UserBase {
     username: string
-    email?: string
 }
   
 // Interface for creating an User
 export interface AuthData extends UserBase {
     password: string;
+    email?: string
 }
   
 // Interface for User Response
 export interface User extends UserBase {
     user_id: number; 
+    email: string
     is_active: boolean;
     is_verified: boolean;
     created_at: string;     // ISO formatted datetime
