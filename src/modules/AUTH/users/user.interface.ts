@@ -2,14 +2,23 @@
 /****** USER INTERFACES ******/
 export type UserId = number
 
-
-export interface User { 
-    userId: number; 
-    username: string;
-    email: string;
-    isActive: boolean;
-    isVerified: boolean;
-    createdAt: string;  
+// Base interface for User
+export interface UserBase {
+    username: string
+    email?: string
+}
+  
+// Interface for creating an User
+export interface AuthData extends UserBase {
+    password: string;
+}
+  
+// Interface for User Response
+export interface User extends UserBase {
+    user_id: number; 
+    is_active: boolean;
+    is_verified: boolean;
+    created_at: string;     // ISO formatted datetime
 }
 
 
@@ -22,11 +31,6 @@ export interface AuthState {
   isAuthenticated: boolean;
 }
 
-export interface AuthData {
-    username: string;
-    password: string;
-    email?: string;
-}
 
 export interface refreshTokenInterface {
     refreshToken: string;
