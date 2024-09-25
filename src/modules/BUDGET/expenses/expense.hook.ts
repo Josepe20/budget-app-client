@@ -1,7 +1,16 @@
 import { useState } from 'react';
 
 
-import { getUserExpenses, getUserActiveExpenses, getUserExpensesByCategory, getUserActiveExpensesByCategory, getExpenseById, createExpense, updateExpense, deleteExpense} from './expense.service';
+import { 
+    getUserExpenses, 
+    getUserActiveExpenses, 
+    getUserExpensesByCategory, 
+    getUserActiveExpensesByCategory, 
+    getExpenseById, 
+    createExpense, 
+    updateExpense, 
+    deleteExpense
+} from './expense.service';
 import { ExpenseCreate } from './expense.interface'
 
 
